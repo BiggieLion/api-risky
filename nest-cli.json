@@ -1,11 +1,11 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/api-risky/src",
+  "sourceRoot": "apps/credits/src",
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
-    "tsConfigPath": "apps/api-risky/tsconfig.app.json"
+    "tsConfigPath": "apps/credits/tsconfig.app.json"
   },
   "projects": {
     "common": {
@@ -15,15 +15,6 @@
       "sourceRoot": "libs/common/src",
       "compilerOptions": {
         "tsConfigPath": "libs/common/tsconfig.lib.json"
-      }
-    },
-    "api-risky": {
-      "type": "application",
-      "root": "apps/api-risky",
-      "entryFile": "main",
-      "sourceRoot": "apps/api-risky/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/api-risky/tsconfig.app.json"
       }
     },
     "credits": {
@@ -37,5 +28,5 @@
     }
   },
   "monorepo": true,
-  "root": "apps/api-risky"
+  "root": "apps/credits"
 }
