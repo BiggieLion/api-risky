@@ -1,26 +1,39 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCreditDto } from './dto/create-credit.dto';
 import { UpdateCreditDto } from './dto/update-credit.dto';
+import { CreditsRepository } from './credits.repository';
 
 @Injectable()
 export class CreditsService {
+  constructor(private readonly creditsRepo: CreditsRepository) {}
+
   create(createCreditDto: CreateCreditDto) {
-    return 'This action adds a new credit';
+    return this.creditsRepo.create({
+      ...createCreditDto,
+      status: 1,
+      timestamp: new Date(),
+      requester: '123',
+      analyst: '534',
+      supervisor: '234',
+    });
   }
 
   findAll() {
-    return `This action returns all credits`;
+    return this.creditsRepo.find({});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} credit`;
+  findOne(_id: string) {
+    return this.creditsRepo.findOne({ _id });
   }
 
-  update(id: number, updateCreditDto: UpdateCreditDto) {
-    return `This action updates a #${id} credit`;
+  update(_id: string, updateCreditDto: UpdateCreditDto) {
+    return this.creditsRepo.findOneAndUpdate(
+      { _id },
+      { $set: updateCreditDto },
+    );
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} credit`;
+  remove(_id: string) {
+    return this.creditsRepo.findOneAndDelete({ _id });
   }
 }

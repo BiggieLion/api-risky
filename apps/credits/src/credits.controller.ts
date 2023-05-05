@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CreditsService } from './credits.service';
 import { CreateCreditDto } from './dto/create-credit.dto';
 import { UpdateCreditDto } from './dto/update-credit.dto';
@@ -7,7 +15,7 @@ import { UpdateCreditDto } from './dto/update-credit.dto';
 export class CreditsController {
   constructor(private readonly creditsService: CreditsService) {}
 
-  @Post()
+  @Post('create')
   create(@Body() createCreditDto: CreateCreditDto) {
     return this.creditsService.create(createCreditDto);
   }
@@ -19,16 +27,16 @@ export class CreditsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.creditsService.findOne(+id);
+    return this.creditsService.findOne(id);
   }
 
-  @Patch(':id')
+  @Patch('update/:id')
   update(@Param('id') id: string, @Body() updateCreditDto: UpdateCreditDto) {
-    return this.creditsService.update(+id, updateCreditDto);
+    return this.creditsService.update(id, updateCreditDto);
   }
 
-  @Delete(':id')
+  @Delete('delete/:id')
   remove(@Param('id') id: string) {
-    return this.creditsService.remove(+id);
+    return this.creditsService.remove(id);
   }
 }

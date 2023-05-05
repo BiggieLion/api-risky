@@ -1,10 +1,13 @@
 import { AbstractDocument } from '@app/common';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-@Schema()
+@Schema({ versionKey: false })
 export class CreditsDocument extends AbstractDocument {
   @Prop()
   status: number;
+
+  @Prop()
+  timestamp: Date;
 
   @Prop()
   requestDate: Date;
@@ -25,7 +28,7 @@ export class CreditsDocument extends AbstractDocument {
   ammount: number;
 
   @Prop()
-  credit_type: string;
+  creditType: string;
 }
 
 export const CreditsSchema = SchemaFactory.createForClass(CreditsDocument);

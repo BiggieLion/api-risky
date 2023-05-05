@@ -7,6 +7,7 @@ import { CreditsDocument, CreditsSchema } from './models/credit.schema';
 
 @Module({
   imports: [
+    DatabaseModule,
     DatabaseModule.forFeature([
       { name: CreditsDocument.name, schema: CreditsSchema },
     ]),
