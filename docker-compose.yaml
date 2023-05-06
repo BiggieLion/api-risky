@@ -1,0 +1,11 @@
+services:
+  credits:
+    build:
+      context: .
+      dockerfile: ./apps/credits/Dockerfile
+      target: development
+    command: pnpm run start:dev credit
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/usr/src/app
