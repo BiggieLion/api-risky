@@ -1,14 +1,16 @@
 services:
   credits:
-    build:
+    build: 
       context: .
       dockerfile: ./apps/credits/Dockerfile
       target: development
-    command: pnpm run start:dev credit
+    command: pnpm run start:dev credits
     ports:
       - '3000:3000'
     volumes:
       - .:/usr/src/app
 
-  risky-db:
+  mongo:
     image: mongo
+    ports:
+      - '27017:27017'
