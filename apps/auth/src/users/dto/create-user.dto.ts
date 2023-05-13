@@ -32,14 +32,9 @@ export class CreateUserDto {
   personType: number;
 
   @IsNotEmpty()
-  @IsString()
-  @ValidateIf((o) => o.person_type === 1) // 1 -> natural person
-  @Matches(/^[A-Z]{4}\d{6}[a-zA-Z\d]{3}$/, {
-    message: 'RFC not valid for natural persons',
-  })
-  @ValidateIf((o) => o.person_type === 2) // 1 -> natural person
-  @Matches(/^[A-Z]{2}\d{6}[a-zA-Z\d]{3}$/, {
-    message: 'RFC not valid for legal persons',
+  @IsString() // 1 -> natural person, 2 -> legal person
+  @Matches(/^(?:[A-Z]{4}|[A-Z]{3})\d{6}[a-zA-Z\d]{3}$/, {
+    message: 'RFC not valid for either natural or legal persons',
   })
   rfc: string;
 
