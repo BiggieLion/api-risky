@@ -26,16 +26,19 @@ export class CreditsController {
     return this.creditsService.create(createCreditDto, user?._id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   async findAll() {
     return this.creditsService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return this.creditsService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch('update/:id')
   async update(
     @Param('id') id: string,
@@ -44,6 +47,7 @@ export class CreditsController {
     return this.creditsService.update(id, updateCreditDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('delete/:id')
   async remove(@Param('id') id: string) {
     return this.creditsService.remove(id);
