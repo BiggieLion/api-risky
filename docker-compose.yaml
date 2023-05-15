@@ -25,6 +25,17 @@ services:
     volumes:
       - .:/usr/src/app
 
+  notifications:
+    build: 
+      context: .
+      dockerfile: ./apps/notifications/Dockerfile
+      target: development
+    command: pnpm run start:dev notifications
+    env_file:
+      - ./apps/credits/.env
+    volumes:
+      - .:/usr/src/app
+
   mongo:
     image: mongo
     ports:
