@@ -6,37 +6,46 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { CreditsService } from './credits.service';
 import { CreateCreditDto } from './dto/create-credit.dto';
 import { UpdateCreditDto } from './dto/update-credit.dto';
+import { CurrentUser, JwtAuthGuard, UserDto } from '@app/common';
 
 @Controller('credits')
 export class CreditsController {
   constructor(private readonly creditsService: CreditsService) {}
 
   @Post('create')
-  create(@Body() createCreditDto: CreateCreditDto) {
-    return this.creditsService.create(createCreditDto);
+  @UseGuards(JwtAuthGuard)
+  async create(
+    @Body() createCreditDto: CreateCreditDto,
+    @CurrentUser() user: UserDto,
+  ) {
+    return this.creditsService.create(createCreditDto, user?._id);
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.creditsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     return this.creditsService.findOne(id);
   }
 
   @Patch('update/:id')
-  update(@Param('id') id: string, @Body() updateCreditDto: UpdateCreditDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateCreditDto: UpdateCreditDto,
+  ) {
     return this.creditsService.update(id, updateCreditDto);
   }
 
   @Delete('delete/:id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     return this.creditsService.remove(id);
   }
 }

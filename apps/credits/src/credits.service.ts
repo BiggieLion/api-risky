@@ -7,12 +7,12 @@ import { CreditsRepository } from './credits.repository';
 export class CreditsService {
   constructor(private readonly creditsRepo: CreditsRepository) {}
 
-  create(createCreditDto: CreateCreditDto) {
+  create(createCreditDto: CreateCreditDto, requester: string) {
     return this.creditsRepo.create({
       ...createCreditDto,
       status: 1,
       timestamp: new Date(),
-      requester: '123',
+      requester,
       analyst: '534',
       supervisor: '234',
     });
