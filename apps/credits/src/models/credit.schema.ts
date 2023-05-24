@@ -29,6 +29,9 @@ export class CreditsDocument extends AbstractDocument {
 
   @Prop()
   creditType: string;
+
+  @Prop()
+  documentsId: string;
 }
 
 export const CreditsSchema = SchemaFactory.createForClass(CreditsDocument);

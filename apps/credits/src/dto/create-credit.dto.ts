@@ -1,7 +1,18 @@
 import { Type } from 'class-transformer';
-import { IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsDate,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateCreditDto {
+  @IsOptional()
+  @IsNumber()
+  status: number;
+
   @IsDate()
   @Type(() => Date)
   requestDate: Date;
@@ -10,6 +21,18 @@ export class CreateCreditDto {
   @Type(() => Date)
   endDate: Date;
 
+  @IsOptional()
+  @IsString()
+  requester: string;
+
+  @IsOptional()
+  @IsString()
+  analyst: string;
+
+  @IsOptional()
+  @IsString()
+  supervisor: string;
+
   @IsNumber()
   @IsNotEmpty()
   ammount: number;
@@ -17,4 +40,9 @@ export class CreateCreditDto {
   @IsString()
   @IsNotEmpty()
   creditType: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  documentsId: string;
 }

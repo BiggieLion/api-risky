@@ -1,2 +1,3 @@
 export const AUTH_SERVICE = 'auth';
-export const NOTIFICATIONS_SERVICE = 'notification'
+export const DOCUMENTS_SERVICE = 'document';
+export const NOTIFICATIONS_SERVICE = 'notification';

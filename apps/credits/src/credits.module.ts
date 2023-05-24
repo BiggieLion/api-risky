@@ -1,7 +1,12 @@
 import { Module } from '@nestjs/common';
 import { CreditsService } from './credits.service';
 import { CreditsController } from './credits.controller';
-import { AUTH_SERVICE, DatabaseModule, LoggerModule } from '@app/common';
+import {
+  AUTH_SERVICE,
+  DOCUMENTS_SERVICE,
+  DatabaseModule,
+  LoggerModule,
+} from '@app/common';
 import { CreditsRepository } from './credits.repository';
 import { CreditsDocument, CreditsSchema } from './models/credit.schema';
 import * as Joi from 'joi';
@@ -22,6 +27,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         PORT: Joi.number().required(),
         AUTH_HOST: Joi.string().required(),
         AUTH_PORT: Joi.number().required(),
+        DOCUMENTS_HOST: Joi.string().required(),
+        DOCUMENTS_PORT: Joi.number().required(),
       }),
     }),
     ClientsModule.registerAsync([
@@ -32,6 +39,17 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
           options: {
             host: configSvc.get('AUTH_HOST'),
             port: configSvc.get('AUTH_PORT'),
+          },
+        }),
+        inject: [ConfigService],
+      },
+      {
+        name: DOCUMENTS_SERVICE,
+        useFactory: (configSvc: ConfigService) => ({
+          transport: Transport.TCP,
+          options: {
+            host: configSvc.get('DOCUMENTS_HOST'),
+            port: configSvc.get('DOCUMENTS_PORT'),
           },
         }),
         inject: [ConfigService],

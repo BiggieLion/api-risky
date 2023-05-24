@@ -1,11 +1,11 @@
 import { NestFactory } from '@nestjs/core';
-import { NotificationsModule } from './notifications.module';
+import { DocumentsModule } from './documents.module';
 import { ConfigService } from '@nestjs/config';
 import { Transport } from '@nestjs/microservices';
 import { Logger } from 'nestjs-pino';
 
 async function bootstrap() {
-  const app = await NestFactory.create(NotificationsModule);
+  const app = await NestFactory.create(DocumentsModule);
   const configSvc = app.get(ConfigService);
   app.connectMicroservice({
     transport: Transport.TCP,

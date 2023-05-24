@@ -1,13 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateCreditDto } from './dto/create-credit.dto';
 import { UpdateCreditDto } from './dto/update-credit.dto';
 import { CreditsRepository } from './credits.repository';
+import { DOCUMENTS_SERVICE } from '@app/common';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class CreditsService {
-  constructor(private readonly creditsRepo: CreditsRepository) {}
+  constructor(
+    private readonly creditsRepo: CreditsRepository,
+    @Inject(DOCUMENTS_SERVICE) documentsSvc: ClientProxy,
+  ) {}
 
-  create(createCreditDto: CreateCreditDto, requester: string) {
+  async create(createCreditDto: CreateCreditDto, requester: string) {
     return this.creditsRepo.create({
       ...createCreditDto,
       status: 1,
@@ -18,22 +23,22 @@ export class CreditsService {
     });
   }
 
-  findAll() {
+  async findAll() {
     return this.creditsRepo.find({});
   }
 
-  findOne(_id: string) {
+  async findOne(_id: string) {
     return this.creditsRepo.findOne({ _id });
   }
 
-  update(_id: string, updateCreditDto: UpdateCreditDto) {
+  async update(_id: string, updateCreditDto: UpdateCreditDto) {
     return this.creditsRepo.findOneAndUpdate(
       { _id },
       { $set: updateCreditDto },
     );
   }
 
-  remove(_id: string) {
+  async remove(_id: string) {
     return this.creditsRepo.findOneAndDelete({ _id });
   }
 }

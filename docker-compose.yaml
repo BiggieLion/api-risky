@@ -32,7 +32,18 @@ services:
       target: development
     command: pnpm run start:dev notifications
     env_file:
-      - ./apps/credits/.env
+      - ./apps/notifications/.env
+    volumes:
+      - .:/usr/src/app
+
+  documents:
+    build: 
+      context: .
+      dockerfile: ./apps/documents/Dockerfile
+      target: development
+    command: pnpm run start:dev documents
+    env_file:
+      - ./apps/documents/.env
     volumes:
       - .:/usr/src/app
 

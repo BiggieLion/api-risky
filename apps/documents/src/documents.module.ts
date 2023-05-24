@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { NotificationsController } from './notifications.controller';
-import { NotificationsService } from './notifications.service';
+import { DocumentsController } from './documents.controller';
+import { DocumentsService } from './documents.service';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { LoggerModule } from '@app/common';
@@ -15,7 +15,7 @@ import { LoggerModule } from '@app/common';
     }),
     LoggerModule,
   ],
-  controllers: [NotificationsController],
-  providers: [NotificationsService],
+  controllers: [DocumentsController],
+  providers: [DocumentsService],
 })
-export class NotificationsModule {}
+export class DocumentsModule {}
