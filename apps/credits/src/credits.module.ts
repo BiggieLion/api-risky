@@ -27,8 +27,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         PORT: Joi.number().required(),
         AUTH_HOST: Joi.string().required(),
         AUTH_PORT: Joi.number().required(),
-        DOCUMENTS_HOST: Joi.string().required(),
-        DOCUMENTS_PORT: Joi.number().required(),
+        // DOCUMENTS_HOST: Joi.string().required(),
+        // DOCUMENTS_PORT: Joi.number().required(),
       }),
     }),
     ClientsModule.registerAsync([
@@ -43,17 +43,17 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         }),
         inject: [ConfigService],
       },
-      {
-        name: DOCUMENTS_SERVICE,
-        useFactory: (configSvc: ConfigService) => ({
-          transport: Transport.TCP,
-          options: {
-            host: configSvc.get('DOCUMENTS_HOST'),
-            port: configSvc.get('DOCUMENTS_PORT'),
-          },
-        }),
-        inject: [ConfigService],
-      },
+      // {
+      //   name: DOCUMENTS_SERVICE,
+      //   useFactory: (configSvc: ConfigService) => ({
+      //     transport: Transport.TCP,
+      //     options: {
+      //       host: configSvc.get('DOCUMENTS_HOST'),
+      //       port: configSvc.get('DOCUMENTS_PORT'),
+      //     },
+      //   }),
+      //   inject: [ConfigService],
+      // },
     ]),
   ],
   controllers: [CreditsController],
