@@ -9,8 +9,8 @@ import { ClientProxy } from '@nestjs/microservices';
 export class CreditsService {
   constructor(
     private readonly creditsRepo: CreditsRepository,
-    @Inject(DOCUMENTS_SERVICE) documentsSvc: ClientProxy,
-  ) {}
+  ) // @Inject(DOCUMENTS_SERVICE) documentsSvc: ClientProxy,
+  {}
 
   async create(createCreditDto: CreateCreditDto, requester: string) {
     return this.creditsRepo.create({
