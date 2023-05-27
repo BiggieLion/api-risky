@@ -25,6 +25,19 @@ services:
     volumes:
       - .:/usr/src/app
 
+  documents:
+    build: 
+      context: .
+      dockerfile: ./apps/documents/Dockerfile
+      target: development
+    command: pnpm run start:dev documents
+    env_file:
+      - ./apps/documents/.env
+    ports:
+      - '3002:3002'
+    volumes:
+      - .:/usr/src/app
+
   notifications:
     build: 
       context: .
@@ -35,18 +48,7 @@ services:
       - ./apps/notifications/.env
     volumes:
       - .:/usr/src/app
-
-  # documents:
-  #   build: 
-  #     context: .
-  #     dockerfile: ./apps/documents/Dockerfile
-  #     target: development
-  #   command: pnpm run start:dev documents
-  #   env_file:
-  #     - ./apps/documents/.env
-  #   volumes:
-  #     - .:/usr/src/app
-
+    
   mongo:
     image: mongo
     ports:

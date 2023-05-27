@@ -7,11 +7,14 @@ import {
   Param,
   Delete,
   UseGuards,
+  Res,
 } from '@nestjs/common';
 import { CreditsService } from './credits.service';
 import { CreateCreditDto } from './dto/create-credit.dto';
 import { UpdateCreditDto } from './dto/update-credit.dto';
 import { CurrentUser, JwtAuthGuard, UserDto } from '@app/common';
+import { Response } from 'express';
+import { CurrentCredit } from '@app/common/decorators/current-credit.decorator';
 
 @Controller('credits')
 export class CreditsController {
@@ -22,8 +25,9 @@ export class CreditsController {
   async create(
     @Body() createCreditDto: CreateCreditDto,
     @CurrentUser() user: UserDto,
+    @Res({ passthrough: true }) response: Response,
   ) {
-    return this.creditsService.create(createCreditDto, user?._id);
+    return this.creditsService.create(createCreditDto, user?._id, response);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -34,8 +38,11 @@ export class CreditsController {
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return this.creditsService.findOne(id);
+  async findOne(
+    @Param('id') id: string,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    return this.creditsService.findOne(id, response);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -43,8 +50,11 @@ export class CreditsController {
   async update(
     @Param('id') id: string,
     @Body() updateCreditDto: UpdateCreditDto,
+    @Res({ passthrough: true }) response: Response,
+    @CurrentCredit() credit: CreateCreditDto,
   ) {
-    return this.creditsService.update(id, updateCreditDto);
+    console.log(credit);
+    return this.creditsService.update(id, updateCreditDto, response);
   }
 
   @UseGuards(JwtAuthGuard)
