@@ -5,13 +5,16 @@ import {
   AUTH_SERVICE,
   DOCUMENTS_SERVICE,
   DatabaseModule,
+  HttpExceptionsFilter,
   LoggerModule,
+  ResponseInterceptor,
 } from '@app/common';
 import { CreditsRepository } from './credits.repository';
 import { CreditsDocument, CreditsSchema } from './models/credit.schema';
 import * as Joi from 'joi';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -57,6 +60,17 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     ]),
   ],
   controllers: [CreditsController],
-  providers: [CreditsService, CreditsRepository],
+  providers: [
+    CreditsService,
+    CreditsRepository,
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionsFilter,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ResponseInterceptor,
+    },
+  ],
 })
 export class CreditsModule {}

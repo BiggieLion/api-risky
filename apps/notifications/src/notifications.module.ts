@@ -3,7 +3,12 @@ import { NotificationsController } from './notifications.controller';
 import { NotificationsService } from './notifications.service';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
-import { LoggerModule } from '@app/common';
+import {
+  HttpExceptionsFilter,
+  LoggerModule,
+  ResponseInterceptor,
+} from '@app/common';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -16,6 +21,16 @@ import { LoggerModule } from '@app/common';
     LoggerModule,
   ],
   controllers: [NotificationsController],
-  providers: [NotificationsService],
+  providers: [
+    NotificationsService,
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionsFilter,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ResponseInterceptor,
+    },
+  ],
 })
 export class NotificationsModule {}
